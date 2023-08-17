@@ -3,7 +3,6 @@
 
 CREATE DATABASE `Jboard`;
 
-# 회원 테이블
 CREATE TABLE `User`(
 	`uid`			VARCHAR(20) PRIMARY KEY,
 	`pass`		VARCHAR(255),
@@ -13,20 +12,13 @@ CREATE TABLE `User`(
 	`hp`			CHAR(13) UNIQUE,
 	`role`		VARCHAR(20) DEFAULT 'USER',
 	`zip`			CHAR(5),
-	`addr1`		VARCHAR(255),farmstoryterms
+	`addr1`		VARCHAR(255),
 	`addr2`		VARCHAR(255),
 	`regip`		VARCHAR(100),
 	`regDate`	DATETIME,
 	`leaveDate`	DATETIME
 );
 
-# 약관 테이블
-CREATE TABLE `Terms`(
-	`terms`		TEXT NOT NULL,
-	`privacy`	TEXT NOT NULL
-);
-
-# 게시물 테이블
 CREATE TABLE `Article`(
 	`no`			INT AUTO_INCREMENT PRIMARY KEY,
 	`parent`		INT DEFAULT 0,
@@ -42,16 +34,23 @@ CREATE TABLE `Article`(
 	FOREIGN KEY(`writer`) REFERENCES `User`(`uid`)
 );
 
-# 파일 테이블
 CREATE TABLE `File`(
-	`fno`			INT	AUTO_INCREMENT PRIMARY KEY, # 파일번호
-	`ano`			INT	NOT NULL,		 # 파일이 속하는 글번호
-	`ofile`	   VARCHAR(255)	NOT NULL, # 원본 파일명
-	`sfile`	   VARCHAR(255)	NOT NULL, # 저장 파일명
-	`download`	INT	DEFAULT 0,		 # 다운로드 횟수
-	`rdate`		DATETIME NOT NULL,	 # 파일 저장일
+	`fno`			INT	AUTO_INCREMENT PRIMARY KEY,
+	`ano`			INT	NOT NULL,
+	`oriName`	VARCHAR(255)	NOT NULL,
+	`newName`	VARCHAR(255)	NOT NULL,
+	`download`	INT	DEFAULT 0,
+	`rdate`		DATETIME NOT NULL,
 	FOREIGN KEY(`ano`) REFERENCES `Article`(`no`)
 );
+
+CREATE TABLE `Terms`(
+	`terms`		TEXT NOT NULL,
+	`privacy`	TEXT NOT NULL
+);
+
+
+
 
 
 
@@ -63,8 +62,8 @@ JOIN `User` AS u ON a.writer = u.uid
 LIMIT 0, 10;
 
 -- 테이블 내용 복사
-INSERT INTO `Article`(title,content, writer, regIp, regDate)
-SELECT title,content, writer, regIp, regDate FROM `Article`;
+INSERT INTO `Article`(title,content, writer, regIp, rDate)
+SELECT title,content, writer, regIp, rDate FROM `Article`;
 
 
 -- 전체 게시물 개수

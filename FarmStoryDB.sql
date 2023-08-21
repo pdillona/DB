@@ -85,4 +85,4 @@ CREATE TABLE `Order` (
 	`orderDate`			DATETIME  NOT NULL,
 	FOREIGN KEY(`orderProduct`) REFERENCES `Product`(`pNo`),
 	FOREIGN KEY(`orderUser`)    REFERENCES `User`(`uid`)
-);
+);Terms
